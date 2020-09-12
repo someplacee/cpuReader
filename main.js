@@ -18,6 +18,9 @@ function createWindow () {
     mainWindow = null;
   });
 
+
+  autoUpdater.checkForUpdatesAndNotify();
+
   setInterval(() => {
     os.cpuUsage(function(v){
       mainWindow.webContents.send('cpu',v*100);
@@ -26,7 +29,6 @@ function createWindow () {
     });
   },1000);
 
-  autoUpdater.checkForUpdatesAndNotify();
 }
 
 app.on('ready', () => {

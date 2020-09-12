@@ -37,9 +37,36 @@ html {
     width: 200px;
     padding: 20px;
     border-radius: 5px;
-    background-color: white;
+    background-color: #225;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    color: #efa;
   }
   .hidden {
     display: none;
   }
+
+#version{
+    color: aqua;
+    padding-right: 10px;
+    margin: auto;
+}
+
+#copy {
+    color: aqua;
+    margin: auto;
+}
+
+footer {
+    background: #222;
+    width: 100%;
+    position: fixed;
+    height: 10vh;
+    left: 0;
+    bottom: 0;
+    border-bottom:1px solid #666;
+    border-top:1px solid #666;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+
+}
