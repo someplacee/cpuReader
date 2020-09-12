@@ -1,0 +1,33 @@
+{
+  "build": {
+    "appId": "com.arcs.cpu",
+    "win": {
+      "target": "nsis",
+      "icon": "icon.ico"
+    }
+  },
+  "name": "arcs",
+  "version": "1.1.6",
+  "description": "",
+  "main": "main.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/someplacee/cpuReader.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron .",
+    "build": "electron-builder build --win --publish never",
+    "deploy": "electron-builder build --win --publish always"
+  },
+  "author": "Arcs Inc.",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^10.1.1",
+    "electron-builder": "^22.8.0"
+  },
+  "dependencies": {
+    "electron-updater": "^4.3.4",
+    "os-utils": "0.0.14"
+  }
+}

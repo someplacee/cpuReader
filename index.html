@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <p id="version"></p>
+  </header>
+    <div class="box">
+        <span class="label">CPU (%)</span>
+        <span id="cpu">-</span>
+      </div>
+      <div class="box">
+        <span class="label">Free Mem (%)</span>
+        <span id="mem">-</span>
+      </div>
+      <div class="box">
+        <span class="label">Total Mem (GB)</span>
+        <span id="total-mem">-</span>
+      </div>
+
+      <div id="notification" class="hidden">
+        <p id="message"></p>
+        <button id="close-button" onClick="closeNotification()">
+          Close
+        </button>
+        <button id="restart-button" onClick="restartApp()" class="hidden">
+          Restart
+        </button>
+      </div>
+
+      
+      <script>
+          const electron = require('electron');
+  const ipcRenderer = electron.ipcRenderer;
+  const version = document.getElementById('version');
+
+  ipcRenderer.on('cpu',(event,data) => {
+  document.getElementById('cpu').innerHTML = data.toFixed(2);
+});
+ipcRenderer.on('mem',(event,data) => {
+  document.getElementById('mem').innerHTML = data.toFixed(2);
+});
+ipcRenderer.on('total-mem',(event,data) => {
+  document.getElementById('total-mem').innerHTML = data.toFixed(2);
+});
+
+ipcRenderer.send('app_version');
+ipcRenderer.on('app_version', (event, arg) => {
+      ipcRenderer.removeAllListeners('app_version');
+      version.innerText = 'Version ' + arg.version;
+    });
+
+    const notification = document.getElementById('notification');
+const message = document.getElementById('message');
+const restartButton = document.getElementById('restart-button');
+ipcRenderer.on('update_available', () => {
+  ipcRenderer.removeAllListeners('update_available');
+  message.innerText = 'A new update is available. Downloading now...';
+  notification.classList.remove('hidden');
+});
+ipcRenderer.on('update_downloaded', () => {
+  ipcRenderer.removeAllListeners('update_downloaded');
+  message.innerText = 'Update Downloaded. It will be installed on restart. Restart now?';
+  restartButton.classList.remove('hidden');
+  notification.classList.remove('hidden');
+});
+
+function closeNotification() {
+  notification.classList.add('hidden');
+}
+function restartApp() {
+  ipcRenderer.send('restart_app');
+}
+      </script>
+</body>
+</html>
